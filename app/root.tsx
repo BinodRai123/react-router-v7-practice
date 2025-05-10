@@ -32,7 +32,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body
+        style={{ backgroundColor: "#232323", height: `100vh`, color: "white" }}
+      >
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -42,10 +44,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <>
-    <h1>Hello I am here..</h1>
-    <Outlet />
-  </>;
+  return (
+    <>
+      <h1>Hello I am here..</h1>
+      <Outlet />
+    </>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

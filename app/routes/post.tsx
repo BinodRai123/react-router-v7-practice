@@ -1,18 +1,44 @@
-import type { Route } from "./+types/post"
+import { data, Form, redirect, useFetcher } from "react-router";
+import type { Route } from "../+types/root";
 
-export async function loader({params} : Route.LoaderArgs) {
-  const  postId = params.postId;
-  return {postId}
+export async function clientLoader({ params }: Route.ClientLoaderArgs) {
+  const postId = params.postId;
+  const res = await fetch(
+    `https://jsonplaceholder.typicode.com/todos/${postId}`
+  );
+  return await res.json();
 }
 
-export async function action() {
-
+export async function clientAction({ params }: Route.ClientActionArgs) {
+  try {
+    await fetch(`https://jsonplaceholder.typicode.com/todos/${params.postId}`, {
+      method: "DELETE",
+    });
+    return { isDeleted: true };
+  } catch (err) {
+    return { isDeleted: false };
+  }
 }
 
-const post = ({loaderData}: Route.ComponentProps) => {
+export default function Post({ loaderData }: Route.ComponentProps) {
+  const fetcher = useFetcher();
+  const isDeleted = fetcher.data?.isDeleted;
+
+  console.log(isDeleted)
+
   return (
-    <div>postId : {loaderData.postId}</div>
-  )
-}
+    <>
+     {
+      !isDeleted && 
+      <>
+         <h1>title :{loaderData.title}</h1>
+        <h1>completed : {loaderData.completed ? "true" : "false"}</h1>
+      </>
+     }
 
-export default post
+      <fetcher.Form method="DELETE">
+        <button type="submit">delete</button>
+      </fetcher.Form>
+    </>
+  );
+}
