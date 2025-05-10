@@ -2,6 +2,7 @@ import {
   isRouteErrorResponse,
   Links,
   Meta,
+  NavLink,
   Outlet,
   Scripts,
   ScrollRestoration,
@@ -46,7 +47,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <>
-      <h1>Hello I am here..</h1>
+      <ul className="flex gap-10 p-5">
+        <NavLink to="/" style={({isActive}) => ({
+          color : isActive ? "yellow" : "white",
+          borderBottom : isActive ? "1px solid white" : ""
+        })}>Home</NavLink>
+        <NavLink to="about" style={({isActive}) => ({
+          color : isActive ? "yellow" : "white",
+          borderBottom : isActive ? "1px solid white" : ""
+        })}>About</NavLink>
+      </ul>
       <Outlet />
     </>
   );
