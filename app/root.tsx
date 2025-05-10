@@ -48,14 +48,25 @@ export default function App() {
   return (
     <>
       <ul className="flex gap-10 p-5">
-        <NavLink to="/" style={({isActive}) => ({
-          color : isActive ? "yellow" : "white",
-          borderBottom : isActive ? "1px solid white" : ""
-        })}>Home</NavLink>
-        <NavLink to="about" style={({isActive}) => ({
-          color : isActive ? "yellow" : "white",
-          borderBottom : isActive ? "1px solid white" : ""
-        })}>About</NavLink>
+        <NavLink
+          to="/"
+          style={({ isActive }) => ({
+            color: isActive ? "yellow" : "white",
+            borderBottom: isActive ? "1px solid white" : "",
+          })}
+        >
+          Home
+        </NavLink>
+        
+        <NavLink
+          to="about"
+          style={({ isActive }) => ({
+            color: isActive ? "yellow" : "white",
+            borderBottom: isActive ? "1px solid white" : "",
+          })}
+        >
+          About
+        </NavLink>
       </ul>
       <Outlet />
     </>

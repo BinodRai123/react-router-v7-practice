@@ -1,4 +1,4 @@
-import { data, Form, redirect, useFetcher, useNavigate } from "react-router";
+import { data, Form, redirect, useFetcher, useNavigate, useNavigation } from "react-router";
 import type { Route } from "../+types/root";
 
 export async function clientLoader({ params }: Route.ClientLoaderArgs) {
@@ -23,7 +23,13 @@ export async function clientAction({ params }: Route.ClientActionArgs) {
 export default function Post({ loaderData }: Route.ComponentProps) {
   const fetcher = useFetcher();
   const isDeleted = fetcher.data?.isDeleted;
+  const isDeleting = fetcher.state !== "idle";
   const navigate = useNavigate();
+  const naviagation = useNavigation();
+
+  const isNavigating = Boolean(naviagation.location)
+
+  if(isNavigating) return <p>Navigating...</p>
 
   return (
     <>
@@ -43,6 +49,8 @@ export default function Post({ loaderData }: Route.ComponentProps) {
       <fetcher.Form method="DELETE">
         <button type="submit">delete</button>
       </fetcher.Form>
+
+      {isDeleting && <p>Deleting Api...</p>} 
     </>
   );
 }
